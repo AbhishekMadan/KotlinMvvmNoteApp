@@ -1,4 +1,4 @@
-package com.abhi.kotlinnotesmvvm.model
+package com.abhi.kotlinnotesmvvm.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
