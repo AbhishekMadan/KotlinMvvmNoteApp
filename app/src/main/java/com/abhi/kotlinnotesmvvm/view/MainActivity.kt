@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
             .observe(this, Observer {
                 // Add list to recycler view.
                 noteAdapter.refreshNotes(it)
+                noteAdapter.notifyDataSetChanged()
             })
         bt_add_note.setOnClickListener {
             startActivity(Intent(this@MainActivity, AddNoteActivity::class.java))

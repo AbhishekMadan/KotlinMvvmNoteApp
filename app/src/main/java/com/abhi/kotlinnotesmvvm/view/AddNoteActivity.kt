@@ -67,6 +67,6 @@ class AddNoteActivity : AppCompatActivity() {
         }
         noteViewModel
             .insertNote(Note(et_title.text.toString(), et_desc.text.toString(), priority_pk.value))
-        finish()
+        // finish()
     }
 }
