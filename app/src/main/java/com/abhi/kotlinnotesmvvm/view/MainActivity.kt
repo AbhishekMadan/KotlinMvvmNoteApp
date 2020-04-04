@@ -5,7 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.ItemTouchHelper.LEFT
+import androidx.recyclerview.widget.ItemTouchHelper.RIGHT
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.abhi.kotlinnotesmvvm.R
 import com.abhi.kotlinnotesmvvm.view.adapter.NoteAdapter
 import com.abhi.kotlinnotesmvvm.viewmodel.NoteViewModeFactory
@@ -31,6 +35,26 @@ class MainActivity : AppCompatActivity() {
             noteAdapter = NoteAdapter()
             adapter = noteAdapter
         }
+        bt_add_note.setOnClickListener {
+            startActivity(Intent(this@MainActivity, AddNoteActivity::class.java))
+        }
+        val itemTouchCallback = object : ItemTouchHelper.SimpleCallback(
+            0,
+            LEFT or RIGHT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return true
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                noteViewModel.deleteNote(noteAdapter.getNoteAt(viewHolder.adapterPosition))
+            }
+        }
+        ItemTouchHelper(itemTouchCallback)
+            .attachToRecyclerView(rv_note_list)
     }
 
     private fun initViewModel() {
@@ -43,8 +67,5 @@ class MainActivity : AppCompatActivity() {
                 noteAdapter.refreshNotes(it)
                 noteAdapter.notifyDataSetChanged()
             })
-        bt_add_note.setOnClickListener {
-            startActivity(Intent(this@MainActivity, AddNoteActivity::class.java))
-        }
     }
 }

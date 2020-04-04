@@ -30,6 +30,8 @@ class NoteAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         notes.addAll(noteList)
     }
 
+    fun getNoteAt(position: Int) = notes[position]
+
     class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(note: Note) {

@@ -1,7 +1,6 @@
 package com.abhi.kotlinnotesmvvm.repo
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.LiveData
 import com.abhi.kotlinnotesmvvm.dao.NoteDao
 import com.abhi.kotlinnotesmvvm.database.Note
