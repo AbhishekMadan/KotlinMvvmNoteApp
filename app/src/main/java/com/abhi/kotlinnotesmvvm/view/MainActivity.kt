@@ -3,6 +3,9 @@ package com.abhi.kotlinnotesmvvm.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -63,9 +66,25 @@ class MainActivity : AppCompatActivity() {
             .get(NoteViewModel::class.java)
         noteViewModel.getAllNotes()
             .observe(this, Observer {
+                Log.i("MC-999","Note list refreshed.")
                 // Add list to recycler view.
                 noteAdapter.refreshNotes(it)
                 noteAdapter.notifyDataSetChanged()
             })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item?.itemId) {
+            R.id.delete_all -> {
+                noteViewModel.deleteAllNotes()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
