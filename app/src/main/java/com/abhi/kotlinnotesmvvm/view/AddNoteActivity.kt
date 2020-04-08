@@ -17,6 +17,7 @@ class AddNoteActivity : AppCompatActivity() {
     private lateinit var noteViewModel: NoteViewModel
 
     companion object {
+        const val EXTRA_ID = "com.abhi.extra_note_id"
         const val MIN_VAL = 0
         const val MAX_VAL = 10
     }

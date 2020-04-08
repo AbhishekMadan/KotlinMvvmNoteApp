@@ -34,10 +34,10 @@ class NoteAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(note: Note) {
-            itemView.tv_priority.text = note.priority.toString()
-            itemView.tv_title.text = note.title
-            itemView.tv_desc.text = note.description
+        fun bind(note: Note) = with(itemView) {
+            tv_priority.text = note.priority.toString()
+            tv_title.text = note.title
+            tv_desc.text = note.description
         }
     }
 }

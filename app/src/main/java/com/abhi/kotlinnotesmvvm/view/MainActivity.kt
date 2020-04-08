@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -14,12 +15,15 @@ import androidx.recyclerview.widget.ItemTouchHelper.RIGHT
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.abhi.kotlinnotesmvvm.R
+import com.abhi.kotlinnotesmvvm.extension.OnItemClickListener
+import com.abhi.kotlinnotesmvvm.extension.addOnItemClickListener
+import com.abhi.kotlinnotesmvvm.view.AddNoteActivity.Companion.EXTRA_ID
 import com.abhi.kotlinnotesmvvm.view.adapter.NoteAdapter
 import com.abhi.kotlinnotesmvvm.viewmodel.NoteViewModeFactory
 import com.abhi.kotlinnotesmvvm.viewmodel.NoteViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnItemClickListener {
 
     private lateinit var noteViewModel: NoteViewModel
     private lateinit var noteAdapter: NoteAdapter
@@ -37,6 +41,7 @@ class MainActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@MainActivity)
             noteAdapter = NoteAdapter()
             adapter = noteAdapter
+            addOnItemClickListener(this@MainActivity)
         }
         bt_add_note.setOnClickListener {
             startActivity(Intent(this@MainActivity, AddNoteActivity::class.java))
@@ -86,5 +91,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onItemClicked(position: Int, view: View) {
+        val noteId = noteAdapter.getNoteAt(position).id
+        val intent = Intent(this@MainActivity, AddNoteActivity::class.java)
+        intent.putExtra(EXTRA_ID, noteId)
+        startActivity(intent)
     }
 }
