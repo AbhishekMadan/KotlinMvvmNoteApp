@@ -40,6 +40,8 @@ class NoteRepository(var context: Application) {
         noteDao.deleteAllNotes()
     }
 
+     fun getNote(noteId: Int) = noteDao.getNote(noteId)
+
     fun getAllNotes() = allNotes
 
 }

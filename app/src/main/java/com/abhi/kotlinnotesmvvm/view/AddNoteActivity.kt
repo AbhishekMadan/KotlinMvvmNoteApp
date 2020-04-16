@@ -2,6 +2,7 @@ package com.abhi.kotlinnotesmvvm.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -11,6 +12,10 @@ import com.abhi.kotlinnotesmvvm.database.Note
 import com.abhi.kotlinnotesmvvm.viewmodel.NoteViewModeFactory
 import com.abhi.kotlinnotesmvvm.viewmodel.NoteViewModel
 import kotlinx.android.synthetic.main.activity_add_note.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 class AddNoteActivity : AppCompatActivity() {
 
@@ -28,6 +33,15 @@ class AddNoteActivity : AppCompatActivity() {
 
         initView()
         initViewModel()
+
+        if(intent?.hasExtra(EXTRA_ID)!!) {
+            intent.getIntExtra(EXTRA_ID, -1).let {
+                CoroutineScope(Dispatchers.Main).launch {
+                    val note = async(Dispatchers.IO) { noteViewModel.getNote(it) }
+                    Log.i("MC-999", "Note: ${note.await().toString()}")
+                }
+            }
+        }
     }
 
     private fun initView() {

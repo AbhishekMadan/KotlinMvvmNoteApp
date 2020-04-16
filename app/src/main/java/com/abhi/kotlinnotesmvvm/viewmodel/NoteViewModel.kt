@@ -23,5 +23,7 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
 
     fun deleteAllNotes() = repository.deleteAll()
 
+    fun getNote(noteId: Int) = repository.getNote(noteId)
+
     fun getAllNotes() = noteList
 }

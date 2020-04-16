@@ -18,4 +18,8 @@ class Note(
 
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
+
+    override fun toString(): String {
+        return "Note: id:$id,  title:$title, description:$description, priority:$priority"
+    }
 }
