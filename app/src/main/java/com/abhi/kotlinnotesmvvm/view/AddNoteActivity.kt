@@ -2,7 +2,6 @@ package com.abhi.kotlinnotesmvvm.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -38,7 +37,12 @@ class AddNoteActivity : AppCompatActivity() {
             intent.getIntExtra(EXTRA_ID, -1).let {
                 CoroutineScope(Dispatchers.Main).launch {
                     val note = async(Dispatchers.IO) { noteViewModel.getNote(it) }
-                    Log.i("MC-999", "Note: ${note.await().toString()}")
+                    // Log.i("MC-999", "Note: ${note.await().toString()}")
+                    note.await()?.let {
+                        et_title.setText(it.title)
+                        et_desc.setText(it.description)
+                        priority_pk.value = it.priority
+                    }
                 }
             }
         }
@@ -80,8 +84,14 @@ class AddNoteActivity : AppCompatActivity() {
                 .show()
             return;
         }
-        noteViewModel
-            .insertNote(Note(et_title.text.toString(), et_desc.text.toString(), priority_pk.value))
+        val note = Note(et_title.text.toString(), et_desc.text.toString(), priority_pk.value)
+        val noteId = intent.getIntExtra(EXTRA_ID, -1)
+        if (noteId > -1) {
+            note.id = noteId
+            noteViewModel.updateNote(note)
+        } else {
+            noteViewModel.insertNote(note)
+        }
         finish()
     }
 }
