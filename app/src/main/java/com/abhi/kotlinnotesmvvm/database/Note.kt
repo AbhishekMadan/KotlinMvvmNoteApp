@@ -22,4 +22,15 @@ class Note(
     override fun toString(): String {
         return "Note: id:$id,  title:$title, description:$description, priority:$priority"
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (javaClass != other?.javaClass) {
+            return false
+        }
+
+        other as Note
+        return title.equals(other.title)
+            && description.equals(other.description)
+            && priority == other.priority
+    }
 }
