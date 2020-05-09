@@ -1,0 +1,22 @@
+apply plugin: 'io.gitlab.arturbosch.detekt'
+
+detekt {
+    toolVersion = "1.8.0"
+    config = files("$rootDir/config/detekt/detekt.yml")
+    parallel = true
+    buildUponDefaultConfig = true
+    reports {
+        xml {
+            enabled = false
+            destination = file("path/to/destination.xml")
+        }
+        html {
+            enabled = true
+            destination = file("$rootDir/report/detekt/detekt.html")
+        }
+        txt {
+            enabled = false
+            destination = file("path/to/destination.txt")
+        }
+    }
+}
