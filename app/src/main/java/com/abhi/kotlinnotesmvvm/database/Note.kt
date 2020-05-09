@@ -33,4 +33,8 @@ class Note(
             && description.equals(other.description)
             && priority == other.priority
     }
+
+    override fun hashCode() =
+        31 * 31 * 31 * id.hashCode() + 31 * 31 * title.hashCode() + 31 * description.hashCode() + priority.hashCode()
+
 }
