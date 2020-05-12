@@ -17,8 +17,8 @@ abstract class NoteDatabase : RoomDatabase() {
     abstract fun noteDao(): NoteDao
 
     companion object {
-        private val TAG = "[NoteDatabase]"
-        private val DATABASE_NAME = "note_db"
+        private const val TAG = "[NoteDatabase]"
+        private const val DATABASE_NAME = "note_db"
         private val LOCK = Any()
         @Volatile var instance: NoteDatabase? = null
 
